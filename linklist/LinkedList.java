@@ -1,6 +1,7 @@
 package linklist;
 
 
+
 public class LinkedList {
 
 	private class ListElement {
@@ -24,6 +25,7 @@ public class LinkedList {
 			return el2;
 		}
 
+		@SuppressWarnings("unused")
 		public void setFirst(Object value) {
 			el1 = value;
 		}
@@ -168,9 +170,19 @@ public class LinkedList {
 			}
 			
 		}
+		return this;				
+	}
+	
+	public LinkedList fropple1() {
+		ListElement p =head;
+		while(p.rest()!=null&&p!=null){
+			Object t;
+			t=p.first();
+			p.setFirst(p.rest().first());
+			p.rest().setFirst(t);
+			p=p.rest().rest();
+		}
 		return this;
-		
-		
 	}
 
 }

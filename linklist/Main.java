@@ -1,6 +1,4 @@
 package linklist;
-
-
 public class Main {
 
 	public Main() {
@@ -27,6 +25,8 @@ public class Main {
 		l2.addFirst(3);
 		l2.addFirst(4);
 		oLinkedList.append(l2);
+		oLinkedList.print();
+		oLinkedList.fropple1();
 		oLinkedList.print();
 	}
 
