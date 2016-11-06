@@ -1,8 +1,6 @@
 package socialNetworks;
 
-import javax.print.attribute.standard.RequestingUserName;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
 
 public class Message {
 
@@ -10,7 +8,7 @@ public class Message {
 	private String author;
 	private int smallAge; // age limit,the smallest age
 	private int largeAge; // the biggest age
-	public int privacy; // 0 is public, 1 is
+	public int privacy; // 0 is public, 1friends ,2 friends of friends
 
 	public Message() {
 		// TODO Auto-generated constructor stub
@@ -27,8 +25,11 @@ public class Message {
 
 	@Override
 	public String toString() {
-		return "Message [content=" + content + ", author=" + author + ", smallAge=" + smallAge + ", largeAge="
-				+ largeAge + "]";
+		String s = "-------------author: "+author+"-----------\n"
+				+content+"\n"+
+				"----------------------------------------\n\n";
+		return s;
+				
 
 	}
 
@@ -61,8 +62,12 @@ public class Message {
 		smallAge = lage;
 	}
 
-	private int getSmallAge() {
+	public int getSmallAge() {
 		return smallAge;
+	}
+	
+	public void print() {
+		System.out.println(toString());
 	}
 
 }

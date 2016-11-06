@@ -1,18 +1,20 @@
 package socialNetworks;
 
-import java.nio.channels.GatheringByteChannel;
+
 
 public class Profile {
 
 	private String username;
 	private int age;
-	public Message[] wall;
+	public LinkedList wall;
 
 	public Profile() {
 		// TODO Auto-generated constructor stub
+		wall = new LinkedList();
 	}
 
 	public Profile(String username, int age) {
+		this();
 		this.age = age;
 		this.username = username;
 
@@ -20,18 +22,12 @@ public class Profile {
 
 	@Override
 	public String toString() {
-		return "Profile []";
+		return "Profile: " +username + age;
 	}
 
-	public void post() {
-
+	public void post( Message m	) {
+		wall.addFirst(m);
 	}
 
-	public void print() {
-	}
-
-	public void printa() {
-
-	}
-
+	
 }
