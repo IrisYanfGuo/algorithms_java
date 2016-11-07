@@ -1,5 +1,9 @@
 package socialNetworks;
-
+/**
+ *A Main class is where i test all my classes
+ * version:1.0 time 7th Nov
+ * @author Yanfang Guo <yanfguo@outlook.com> <yanfguo@vub.ac.be>
+ */
 public class Main {
 
 	public Main() {
