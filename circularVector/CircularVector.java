@@ -4,16 +4,20 @@ import java.util.Arrays;
  * Created by Yanfang Guo on 2016/11/7.
  * <yanfguo@outlook.com> <yanfguo@vub.ac.be>
  */
-public class CircularVector {
-    private Object data[];
+public class CircularVector<E> {
+    private E data[];
     private int first;
     private int size;
-    private int capacity;
+    private int capacity=10;
+
+    public CircularVector() {
+        data = (E[]) new Object[capacity];
+    }
 
     public CircularVector(int capacity) {
         size = 0;
         first = 0;
-        data = new Object[capacity];
+        data = (E[])new Object[capacity];
         this.capacity = capacity;
     }
 
@@ -32,7 +36,7 @@ public class CircularVector {
         return size;
     }
 
-    public CircularVector addFirst(Object o) {
+    public CircularVector addFirst(E o) {
         if (size >= capacity) {
             System.out.println("Can not add, the size exceed the capacity");
         } else {
@@ -44,7 +48,7 @@ public class CircularVector {
 
     }
 
-    public CircularVector addLast(Object o) {
+    public CircularVector addLast(E o) {
         if (size >= capacity) {
             System.out.println("Can not add, the size exceed the capacity");
         } else {
@@ -55,11 +59,11 @@ public class CircularVector {
         return this;
     }
 
-    public Object getFirst() {
+    public E getFirst() {
         return data[first];
     }
 
-    public Object getLast() {
+    public E getLast() {
         return data[first + capacity];
     }
 

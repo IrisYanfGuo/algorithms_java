@@ -35,6 +35,7 @@ public class test {
 		myVector.reverse();
 		myVector.print();
 		myVector.interleaves(myVector).print();
+		myVector.getLast()
 	}
 
 }

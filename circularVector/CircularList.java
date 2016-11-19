@@ -1,9 +1,9 @@
 /**
  * Created by Iris on 2016/11/7.
  */
-public class CircularList {
+public class CircularList <E>{
     private  class ListElement {
-        private Object el1;
+        private E el1;
         private ListElement el2;
 
         /**
@@ -13,7 +13,7 @@ public class CircularList {
          * @param el          the el, the object
          * @param nextElement the next element
          */
-        public ListElement(Object el, ListElement nextElement) {
+        public ListElement(E el, ListElement nextElement) {
             el1 = el;
             el2 = nextElement;
         }
@@ -23,7 +23,7 @@ public class CircularList {
          *
          * @param el the el
          */
-        public ListElement(Object el) {
+        public ListElement(E el) {
             this(el, null);
         }
 
@@ -32,7 +32,7 @@ public class CircularList {
          *
          * @return the object, the contant in each unit.
          */
-        public Object first() {
+        public E first() {
             return el1;
         }
 
@@ -51,7 +51,7 @@ public class CircularList {
          * @param value the value
          */
         @SuppressWarnings("unused")
-        public void setFirst(Object value) {
+        public void setFirst(E value) {
             el1 = value;
         }
 
@@ -88,7 +88,7 @@ public class CircularList {
      * @param o the o
      * @return the circular list
      */
-    public CircularList addFirst(Object o){
+    public CircularList addFirst(E o){
         if (head == null){
             head = new ListElement(o,head);
             tail = head;
@@ -105,7 +105,7 @@ public class CircularList {
      * @param o the o
      * @return the circular list
      */
-    public CircularList addLast(Object o){
+    public CircularList addLast(E o){
         if( tail == null){
             tail = new ListElement(o,tail);
             head = tail;

@@ -1,22 +1,26 @@
 
 /**
- * @author yanfguo yanfguo@vub.ac.be 10 Oct 2016 13:07 Java second exercise
+ * Class Vector
+ * version:2.0  2016/11/18
+ * @author Yanfang Guo <yanfguo@outlook.com> <yanfguo@vub.ac.be>
  */
-public class Vector {
+
+public class Vector<E> {
 
 	/*
 	 * this is a class about Vector
 	 */
-	protected Object data[];
+	protected E data[];
 	protected int count = 0;
-	protected int capacity;
+	protected int capacity=10;
 
 	public Vector() {
 		// TODO Auto-generated constructor stub
+		data = (E[]) new Object[capacity];
 	}
 
 	public Vector(int capacity1) {
-		data = new Object[capacity1];
+		data = (E[]) new Object[capacity1];
 		capacity = capacity1;
 	}
 
@@ -28,11 +32,11 @@ public class Vector {
 		return size() == 0;
 	}
 
-	public Object get(int index) {
+	public E get(int index) {
 		return data[index];
 	}
 
-	public boolean contains(Object obj) {
+	public boolean contains(E obj) {
 		for (int i = 0; i < count; i++) {
 			if (data[i] == obj)
 				return true;
@@ -40,11 +44,11 @@ public class Vector {
 		return false;
 	}
 
-	public void set(int index, Object obj) {
+	public void set(int index, E obj) {
 		data[index] = obj;
 	}
 
-	public void addFirst(Object item) {
+	public void addFirst(E item) {
 		count++;
 		if (isFull())
 			extendCapacity();
@@ -55,18 +59,18 @@ public class Vector {
 
 	}
 
-	public void addLast(Object o) {
+	public void addLast(E o) {
 		data[count] = o;
 		count++;
 		if (isFull())
 			extendCapacity();
 	}
 
-	public Object getFirst() {
+	public E getFirst() {
 		return data[0];
 	}
 
-	public Object getLast() {
+	public E getLast() {
 		return data[count - 1];
 	}
 
@@ -94,7 +98,7 @@ public class Vector {
 	}
 
 	public void reverse() {
-		Object temp;
+		E temp;
 		for (int i = 0; i < count / 2; i++) {
 			temp = data[i];
 			data[i] = data[count - 1 - i];
@@ -113,7 +117,7 @@ public class Vector {
 		return v2;
 	}
 
-	public void copy(Vector v1) {
+	public void copy(Vector<E> v1) {
 		for (int i = 0; i < v1.count; i++) {
 			data[i] = v1.data[i];
 		}
@@ -139,7 +143,7 @@ public class Vector {
 	// doubles the capacity of our vector.
 	//
 	private void extendCapacity() {
-		Object[] data2 = new Object[capacity * 2];
+		E[] data2 =  (E[])new Object[capacity * 2];
 		for (int i = 0; i < count; i++) {
 			data2[i] = data[i];
 		}
