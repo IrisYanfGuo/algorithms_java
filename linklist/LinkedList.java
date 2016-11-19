@@ -6,7 +6,7 @@ import java.util.Comparator;
  * @author Yanfang Guo <yanfguo@outlook.com> <yanfguo@vub.ac.be>
  */
 
-public class LinkedList<E> {
+public class LinkedList<E> implements ILinkedList<E> {
 
 	private class ListElement {
 		private E el1;
@@ -140,7 +140,7 @@ public class LinkedList<E> {
 	 * public void print() { LinkedList.ListElement temp; temp = head; do {
 	 * System.out.println(temp.el1); temp=temp.el2; }while (temp!=null); }
 	 */
-	public LinkedList print() {
+	public LinkedList<E> print() {
 		System.out.print(toString());
 		System.out.println();
 		return this;
