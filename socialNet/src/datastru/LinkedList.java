@@ -1,12 +1,17 @@
+package datastru;
+
 import java.util.Comparator;
 
 /**
- * The type Linked list.
+ * Class Linked;ist， contains listElement[]
+ * version:2.0  2016/11/18
+ * @author Yanfang Guo <yanfguo@outlook.com> <yanfguo@vub.ac.be>
  */
-public class LinkedList {
 
-	private  class ListElement {
-		private Object el1;
+public class LinkedList<E> implements ILinkedList<E> {
+
+	private class ListElement {
+		private E el1;
 		private ListElement el2;
 
 		/**
@@ -16,7 +21,7 @@ public class LinkedList {
 		 * @param el          the el, the object
 		 * @param nextElement the next element
 		 */
-		public ListElement(Object el, ListElement nextElement) {
+		public ListElement(E el, ListElement nextElement) {
 			el1 = el;
 			el2 = nextElement;
 		}
@@ -26,7 +31,7 @@ public class LinkedList {
 		 *
 		 * @param el the el
 		 */
-		public ListElement(Object el) {
+		public ListElement(E el) {
 			this(el, null);
 		}
 
@@ -35,7 +40,7 @@ public class LinkedList {
 		 *
 		 * @return the object, the contant in each unit.
 		 */
-		public Object first() {
+		public E first() {
 			return el1;
 		}
 
@@ -54,7 +59,7 @@ public class LinkedList {
 		 * @param value the value
 		 */
 		@SuppressWarnings("unused")
-		public void setFirst(Object value) {
+		public void setFirst(E value) {
 			el1 = value;
 		}
 
@@ -68,7 +73,7 @@ public class LinkedList {
 		}
 
 		/*
-		 * public String toString(){ String s = null; s= s+el1; return s; }
+         * public String toString(){ String s = null; s= s+el1; return s; }
 		 */
 	}
 
@@ -88,9 +93,8 @@ public class LinkedList {
 	 *
 	 * @param o the o
 	 */
-	public void addFirst(Object o) {
+	public void addFirst(E o) {
 		head = new ListElement(o, head);
-
 	}
 
 	/**
@@ -98,7 +102,7 @@ public class LinkedList {
 	 *
 	 * @return the first
 	 */
-	public Object getFirst() {
+	public E getFirst() {
 		return head.first();
 	}
 
@@ -108,7 +112,7 @@ public class LinkedList {
 	 * @param n the n
 	 * @return the object
 	 */
-	public Object get(int n) {
+	public E get(int n) {
 		ListElement d = head;
 		while (n > 0) {
 			d = d.rest();
@@ -138,7 +142,7 @@ public class LinkedList {
 	 * public void print() { LinkedList.ListElement temp; temp = head; do {
 	 * System.out.println(temp.el1); temp=temp.el2; }while (temp!=null); }
 	 */
-	public LinkedList print() {
+	public LinkedList<E> print() {
 		System.out.print(toString());
 		System.out.println();
 		return this;
@@ -166,9 +170,9 @@ public class LinkedList {
 	 * @param o     the o
 	 * @return the linked list
 	 */
-// Add a method set(int n, Object o) which replaces the nth element in the
+// Add a method set(int n, E o) which replaces the nth element in the
 	// list.
-	public LinkedList set(int index, Object o) {
+	public LinkedList set(int index, E o) {
 		int t = 1;
 		ListElement p = head;
 		while (t != index) {
@@ -201,7 +205,7 @@ public class LinkedList {
 	 * @param o the o
 	 * @return the linked list
 	 */
-	public LinkedList addLast(Object o) {
+	public LinkedList addLast(E o) {
 		ListElement t = getLast();
 		t.el2 = new ListElement(o);
 		return this;
@@ -214,10 +218,10 @@ public class LinkedList {
 	 * @return the list element
 	 */
 // searches for a given element in the linked list.
-	public ListElement search(Object o) {
+	public ListElement search(E o) {
 		ListElement p = head;
 		while (p.el1 != o) {
-				p=p.el2;		
+			p = p.el2;
 		}
 		return p;
 	}
@@ -227,9 +231,9 @@ public class LinkedList {
 	 *
 	 * @return the object
 	 */
-	public Object popFirst(){
-		Object t = head.el1;
-		head= head.el2;
+	public E popFirst() {
+		E t = head.el1;
+		head = head.el2;
 		return t;
 	}
 
@@ -238,19 +242,37 @@ public class LinkedList {
 	 *
 	 * @return the object
 	 */
-	public  Object popLast(){
+	public E popLast() {
 		ListElement p = head;
 		while (p.el2.el2 != null) {
 			p = p.el2;
 		}
-		Object t = p.rest().first();
+		E t = p.rest().first();
 		p.setRest(null);
 		return t;
+	}
+
+	public E remove(int i){
+		if(i>=size()){
+			return null;
+		} else if (i==0){
+			return popFirst();
+		}else{
+			ListElement p = head;
+			int pos = 0;
+			while (pos!=i-1){
+				p = p.rest();
+				pos +=1;
+			}
+			E t = p.rest().first();
+			p.setRest(p.rest().rest());
+			return t;
+		}
 	}
 	/*
 	 * public LinkedList fropple() { ListElement p = head; while(p!=null){
 	 * p.el2.el2 = p; p.el2 =p.el2.el2; p = p.el2.el2; } return this;
-	 * 
+	 *
 	 * }
 	 */ // error, infinite loop
 
@@ -260,8 +282,8 @@ public class LinkedList {
 	 *
 	 * @param l2 the l 2
 	 */
-	public void append(LinkedList l2) {
-		getLast().el2=l2.head;
+	public void append(LinkedList<E> l2) {
+		getLast().el2 = l2.head;
 	}
 
 	/**
@@ -270,30 +292,32 @@ public class LinkedList {
 	 * @return the linked list
 	 */
 	public LinkedList fropple() {
-		if (head!=null&&head.rest()!=null) {
-			ListElement t1=head;
+		if (head != null && head.rest() != null) {
+			ListElement t1 = head;
 			ListElement t2 = head.rest();
-			head = t2;	
+			head = t2;
 			ListElement t3;
-			
-			while (t1!=null&&t2!=null) {
+
+			while (t1 != null && t2 != null) {
 				t3 = t2.rest();
 				t1.setRest(t2.rest());
 				t2.setRest(t1);
-				
-				if (t3 == null)
-				{break;}if (t3.rest()!=null) {
+
+				if (t3 == null) {
+					break;
+				}
+				if (t3.rest() != null) {
 					t1.setRest(t3.rest());
-					t1=t3;
-					t2= t1.rest();
+					t1 = t3;
+					t2 = t1.rest();
 				} else {
 					t1 = t3;
-					t2= t1.rest();
+					t2 = t1.rest();
 				}
 			}
-			
+
 		}
-		return this;				
+		return this;
 	}
 
 	/**
@@ -302,13 +326,13 @@ public class LinkedList {
 	 * @return the linked list
 	 */
 	public LinkedList fropple1() {
-		ListElement p =head;
-		while(p.rest()!=null&&p!=null){
-			Object t;
-			t=p.first();
+		ListElement p = head;
+		while (p.rest() != null && p != null) {
+			E t;
+			t = p.first();
 			p.setFirst(p.rest().first());
 			p.rest().setFirst(t);
-			p=p.rest().rest();
+			p = p.rest().rest();
 		}
 		return this;
 	}
@@ -319,20 +343,49 @@ public class LinkedList {
 	 *
 	 * @param o the o
 	 */
-	public void addSorted(Comparable o){
-		if(head == null){
-			head = new ListElement(o,null);
-		} else  if (((Comparable)head.first()).compareTo(o)>0){
-			head = new ListElement(o,head);
-		} else{
+	public void addSorted(Comparable o) {
+		if (head == null) {
+			head = new ListElement((E)o, null);
+		} else if (((Comparable) head.first()).compareTo(o) > 0) {
+			head = new ListElement((E)o, head);
+		} else {
 			ListElement d = head;
-			while((d.rest()!= null)&&((Comparable)d.rest().first()).compareTo(o)<0){
-				d=d.rest();
+			while ((d.rest() != null) && ((Comparable) d.rest().first()).compareTo(o) < 0) {
+				d = d.rest();
 			}
 			ListElement next = d.rest();
-			d.setRest(new ListElement(o,next));
+			d.setRest(new ListElement((E)o, next));
 		}
 
+	}
+
+
+	/**
+	 * this is mainly used in the priority queue.
+	 * @return
+	 */
+	public E popPriority() {
+		if (head == null) {
+			return null;
+		} else {
+			ListElement d = head;
+			ListElement t = head;
+			while ((d.rest().rest() != null)) {
+				if (((Comparable) d.rest().first()).compareTo(t.rest().first()) < 0) {
+					t = d;
+				}
+				d = d.rest();
+			}
+			E temp = t.rest().first();
+			t.setRest(t.rest().rest());
+			return temp;
+
+		}
+	}
+
+
+	public ListElement getHead() {
+		return head;
 	}
 
 }
