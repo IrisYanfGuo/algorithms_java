@@ -68,6 +68,8 @@ public class Profile {
     }
 
     public void printwall(){
+        System.out.println("this is "+username+"'s wall");
+        System.out.print("\n");
         System.out.print(wall.toString());
     }
 }

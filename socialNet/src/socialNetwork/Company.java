@@ -18,6 +18,10 @@ public class Company {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void post(String a ){
 
     }

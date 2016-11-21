@@ -66,7 +66,8 @@ public class Network implements INetwork {
         boolean find = false;
         for (int i = 0; i < usersInfo.size(); i++) {
             a = usersInfo.get(i);
-            if (a.getUsername() == username) {
+            String b = a.getUsername();
+            if (b.equals(username)) {
                 find = true;
                 break;
             }
@@ -96,6 +97,18 @@ public class Network implements INetwork {
     public void postMsgAll(String username, String message,
                            int privacy, int ageLimit, int timestamp){
         postMsgList(usersInfo,username,message,privacy,ageLimit,timestamp);
+    }
+
+    public void printUsr(){
+        for (int i = 0; i < usersInfo.size(); i++) {
+            System.out.println(usersInfo.get(i).getUsername());
+        }
+    }
+
+    public void printCom(){
+        for (int i = 0; i <companyInfo.size() ; i++) {
+            System.out.println(companyInfo.get(i).getName());
+        }
     }
 
     public void postAd(String username, String message, int ageLimit,
