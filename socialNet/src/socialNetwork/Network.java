@@ -2,7 +2,6 @@ package socialNetwork;
 
 import datastru.*;
 
-import java.security.PublicKey;
 
 /**
  * Besides standard messages, the network should support advertisements.
@@ -20,9 +19,10 @@ import java.security.PublicKey;
  * @author Yanfang Guo <yanfguo@outlook.com> <yanfguo@vub.ac.be>
  */
 
+
 public class Network implements INetwork {
     private String name = "HOMEWORK";
-    private LinkedList<Profile> usersInfo;
+    private LinkedList<User> usersInfo;
     private LinkedList<Company> companyInfo;
     private int timeStamp;
 
@@ -38,8 +38,9 @@ public class Network implements INetwork {
     }
 
     public void createUserProfile(String name, int age) {
-        Profile t = new Profile(name, age);
+        User t = new User(name, age);
         usersInfo.addFirst(t);
+        t.getUsername();
     }
 
     public void createCorporateProfile(String name) {
@@ -80,18 +81,19 @@ public class Network implements INetwork {
     }
 
     //not finished
+    //postMsg function
     public void postMessage(String username, String message,
                             int privacy, int ageLimit, int timestamp) {
         Profile a = findUser(username);
-        Message m = new UserMsg(message,username,0,0);
-        a.post(m);
+        UserMsg m = new UserMsg(message,username,0,0);
+        a.postUsrMsg(m);
     }
 
-    public void postMsgList(LinkedList<Profile> a ,String username, String message,
+    public void postMsgList(LinkedList<User> a ,String username, String message,
                            int privacy, int ageLimit, int timestamp){
-        Message msg= new UserMsg(message,username,0,0);
+        UserMsg msg= new UserMsg(message,username,0,0);
         for (int i = 0;i<a.size();i++){
-           a.get(i).post(msg);
+           a.get(i).postUsrMsg(msg);
         }
     }
     public void postMsgAll(String username, String message,
@@ -105,6 +107,12 @@ public class Network implements INetwork {
         }
     }
 
+
+
+
+
+
+    //post ad function
     public void printCom(){
         for (int i = 0; i <companyInfo.size() ; i++) {
             System.out.println(companyInfo.get(i).getName());
@@ -113,7 +121,27 @@ public class Network implements INetwork {
 
     public void postAd(String username, String message, int ageLimit,
                        boolean paid, int timestamp) {
+        Profile a = findUser(username);
+        Ad m = new Ad(message,username,ageLimit,timestamp);
+        a.postAd(m);
     }
+
+
+    public void postAdByList(LinkedList<User> usrList,String adContent,String companyName
+                             ,int ageLimit,boolean paid,int timeStamp){
+        Ad m = new Ad(adContent,companyName,ageLimit,timeStamp);
+        for (int i = 0; i < usrList.size() ; i++) {
+            usrList.get(i).postAd(m);
+        }
+
+    }
+
+    public void postAdAll(String adContent,String companyName
+            ,int ageLimit,boolean paid,int timeStamp){
+        Ad m = new Ad(adContent,companyName,ageLimit,timeStamp);
+        postAdByList(usersInfo,adContent,companyName,ageLimit,paid,timeStamp);
+    }
+
 
     public void connect(String username1, String username2) {
     }

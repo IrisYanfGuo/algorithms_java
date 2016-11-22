@@ -26,7 +26,10 @@ public class Profile {
         wall = new LinkedList<>();
         adList = new LinkedList<>();
         friList = new LinkedList<>();
+        friMsg = new LinkedList<>();
     }
+
+
 
     public Profile(String username, int age) {
         this();
@@ -46,22 +49,28 @@ public class Profile {
      */
 
     // unclear the function of post ,may overwrite it later
-    public void post(Message m) {
-        wall.addFirst(m);
+    public void postUsrMsg(UserMsg m) {
+        friMsg.addFirst(m);
+    }
+
+    public void postAd(Ad ad){
+        adList.addFirst(ad);
+    }
+
+    public void post(){
+        for (int i = 0; i <friMsg.size() ; i++) {
+            if (i%4==0){
+                adList.popFirst().print();
+            }
+            friMsg.get(i).print();
+
+        }
     }
 
     public boolean compareByName(String username) {
         return username == this.username;
     }
 
-    public void wallGenerate(){
-        for (int i =0;i<friMsg.size();i=i+4){
-            wall.addFirst(friMsg.get(i));
-            wall.addFirst(friMsg.get(i+1));
-            wall.addFirst(friMsg.get(i+2));
-            wall.addFirst(friMsg.get(i+4));
-        }
-    }
 
     public String getUsername() {
         return username;
@@ -70,6 +79,7 @@ public class Profile {
     public void printwall(){
         System.out.println("this is "+username+"'s wall");
         System.out.print("\n");
-        System.out.print(wall.toString());
+        post();
+        System.out.println(wall.toString());
     }
 }

@@ -5,8 +5,9 @@ import datastru.LinkedList;
 /**
  * Created by Iris on 2016/11/7.
  */
-public class Company {
+public class Company extends Profile{
     private String name;
+    private String username;
     private LinkedList<Message> ad;
 
     public Company() {
@@ -17,6 +18,7 @@ public class Company {
         this();
         this.name = name;
     }
+
 
     public String getName() {
         return name;

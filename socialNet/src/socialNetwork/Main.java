@@ -59,10 +59,21 @@ public class Main {
 			line2 = readCom.readLine();
 		}
 
+		//create some ads ,initialize
+		BufferedReader readAd= new BufferedReader(new FileReader("./src/socialNetwork/ad.txt"));
+
+		String line3= readAd.readLine();
+		while (line3 != null) {
+			System.out.println(line3);
+			net.postAdAll(line3.split(" ")[0], line3.split(" ")[1], Integer.parseInt(line3.split(" ")[2]),Boolean.parseBoolean(line3.split(" ")[3]),Integer.parseInt(line3.split(" ")[4]));
+			line3 = readAd.readLine();
+		}
 		net.printUsr();
 		net.printCom();
 		net.printWall("userB");
 		net.printWall("ua");
+
+
 	}
 	
 
