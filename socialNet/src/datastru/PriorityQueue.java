@@ -10,7 +10,7 @@ public class PriorityQueue<E>
 	/**
 	 * The type Priority pair. it is the element of the priority queue.
 	 */
-	public class PriorityPair<E> implements Comparable
+	public class PriorityPair implements Comparable
 	{
 
 		public E element;
@@ -38,20 +38,32 @@ public class PriorityQueue<E>
 					", priority=" + priority;
 		}
 
+		public void print(){
+			System.out.println(element.toString());
+		}
+
 		public int compareTo(Object o) {
 			PriorityPair p2 = (PriorityPair) o;
 			return ((Comparable)priority).compareTo(p2.priority);
 		}
 
+		public E getElement() {
+			return this.element;
+		}
 	}
 
-	private LinkedList<E> data;
+	private LinkedList<PriorityPair> data;
 
 	/**
 	 * Instantiates a new Priority queue.
 	 */
 	public PriorityQueue() {
-		data = new LinkedList<E>();
+		data = new LinkedList<>();
+	}
+
+
+	public LinkedList<PriorityPair> getData() {
+		return data;
 	}
 
 
@@ -76,7 +88,7 @@ public class PriorityQueue<E>
 	 */
 	public E pop()
 	{
-		return data.popFirst();
+		return data.popFirst().getElement();
 	}
 
 	/**
@@ -85,7 +97,7 @@ public class PriorityQueue<E>
 	 * @return the top of the queue
 	 */
 	public E top() {
-		return data.getFirst();
+		return data.getFirst().getElement();
 	}
 
 	/**
@@ -93,5 +105,9 @@ public class PriorityQueue<E>
 	 */
 	public void print(){
 		data.print();
+	}
+
+	public int size(){
+		return getData().size();
 	}
 }

@@ -23,6 +23,9 @@ public class Main {
 
 
 
+
+
+		/////////////////////////// initialize//////////////////////////////
 		Network net = new Network();
 
 		
@@ -43,10 +46,15 @@ public class Main {
 		
 		String line1 = readMsg.readLine();
 		while (line1 != null) {
-			net.postMsgAll(line1.split(" ")[0], line1.split(" ")[1], Integer.parseInt(line1.split(" ")[2]),Integer.parseInt(line1.split(" ")[3]),Integer.parseInt(line1.split(" ")[4]));
-			System.out.println(line1);
+			String content = line1.split(" ")[0];
+			String author = line1.split(" ")[1];
+			int ageLimit = Integer.parseInt(line1.split(" ")[2]);
+			int privacy  = Integer.parseInt(line1.split(" ")[3]);
+			UserMsg msg = new UserMsg(content,author,ageLimit,privacy,TimeStamp.getTimeStamp());
+			net.postMsgAll(msg,msg.getPrivacy(),msg.getAgeLimit());
 			line1 = readMsg.readLine();
 		}
+		System.out.print("read Msg from msg.txt completed\npost these msgs to all users");
 
 
 		//create some companys , initialize
@@ -54,28 +62,42 @@ public class Main {
 
 		String line2 = readCom.readLine();
 		while (line2 != null) {
-			System.out.println(line2);
 			net.createCorporateProfile(line2);
 			line2 = readCom.readLine();
 		}
-
+		System.out.print("read company profile from company.txt completed");
 		//create some ads ,initialize
 		BufferedReader readAd= new BufferedReader(new FileReader("./src/socialNetwork/ad.txt"));
 
-		String line3= readAd.readLine();
+		String line3 = readAd.readLine();
 		while (line3 != null) {
-			System.out.println(line3);
-			net.postAdAll(line3.split(" ")[0], line3.split(" ")[1], Integer.parseInt(line3.split(" ")[2]),Boolean.parseBoolean(line3.split(" ")[3]),Integer.parseInt(line3.split(" ")[4]));
+			String content = line3.split(" ")[0];
+			String author = line3.split(" ")[1];
+			int ageLimit = Integer.parseInt(line3.split(" ")[2]);
+			boolean paid  = Boolean.parseBoolean(line3.split(" ")[3]);
+			Ad ad= new Ad(content,author,ageLimit,TimeStamp.getTimeStamp(),paid);
+			net.postAdAll(ad,author,ageLimit,paid);
 			line3 = readAd.readLine();
 		}
+		System.out.print("read ads from ad.txt completed\n post these ads to all users");
+
+
+		///////////////////////////initialize////////////////////////////
+
+
+
+		net.findUser("userB").printADlist();
 		net.printUsr();
 		net.printCom();
 		net.printWall("userB");
 		net.printWall("ua");
 
 
+
+
+
 	}
-	
+
 
 
 }

@@ -23,18 +23,20 @@ public class Message {
         // TODO Auto-generated constructor stub
     }
 
-    public Message(String content, String author, int ageLimit, int privacy) {
+    public Message(String content, String author, int ageLimit, int privacy, int timeStamp) {
         // TODO Auto-generated constructor stub
         this.content = content;
         this.author = author;
         this.ageLimit = ageLimit;
         this.privacy = privacy;
+        this.timeStamp = timeStamp;
     }
 
-    public Message(String content, String author, int privacy) {
+    public Message(String content, String author, int ageLimit, int timeStamp) {
         this.content = content;
         this.author = author;
-        this.privacy = privacy;
+        this.ageLimit = ageLimit;
+        this.timeStamp = timeStamp;
     }
 
     @Override
@@ -47,8 +49,16 @@ public class Message {
                 '}';
     }
 
+    public String getContent() {
+        return content;
+    }
+
     public String getAuthor() {
         return author;
+    }
+
+    public int getAgeLimit() {
+        return ageLimit;
     }
 
     public int getPrivacy() {

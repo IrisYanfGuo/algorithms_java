@@ -8,31 +8,24 @@ package socialNetwork;
  * @author Yanfang Guo <yanfguo@outlook.com <yanfguo@vub.ac.be>
  */
 public class Ad extends Message{
-    private String content;
-    private String companyName;
-    private int ageLimit;
-    private int timeStamp;
 
+    boolean paid;
     public Ad() {
     }
 
-    public Ad(String content, String companyName) {
-        this.content = content;
-        this.companyName = companyName;
+    public Ad(String content, String author, int ageLimit, int privacy, int timeStamp) {
+        super(content, author, ageLimit, privacy, timeStamp);
     }
 
-    public Ad(String content, String companyName, int ageLimit, int timeStamp) {
-        this.content = content;
-        this.companyName = companyName;
-        this.ageLimit = ageLimit;
-        this.timeStamp = timeStamp;
+    public Ad(String content, String author, int ageLimit, int timeStamp, boolean paid) {
+       super(content,author,ageLimit,timeStamp);
+        this.paid = paid;
     }
 
     @Override
     public String toString() {
-        String s = "-------------company: "+companyName+"-----------\n\n"
-                +content+"\n"+
-                "\n\n";
+        String s = "-------------company: "+super.getAuthor()+"-----------\n\n"
+                +super.getContent()+"\n"+ "timeStamp:"+super.getTimeStamp()+"\n\n\n";
         return s;
     }
 

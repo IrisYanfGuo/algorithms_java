@@ -3,33 +3,16 @@ package socialNetwork;
 import datastru.*;
 
 
-/**
- * Besides standard messages, the network should support advertisements.
- * These advertisement messages are posted by special kind of non-personal profiles
- * related to companies. Add support for distinguishing personal and corporate profiles
- * and support for advertisement messages.
- * <p>
- * When printing a wall, ads and normal messages are alternated: for every 4 user messages one ad is inserted.
- * Both messages and ads are sorted chronologically. The timestamp can be represented with an integer number where a higher number
- * corresponds with a newer message. Please note that messages are not necessarily chronologically posted to the network,
- * i.e. messages can be posted with a timestamp in the past or future.
- * <p>
- * version : 2.0 16/11/2016
- *
- * @author Yanfang Guo <yanfguo@outlook.com> <yanfguo@vub.ac.be>
- */
-
-
 public class Network implements INetwork {
     private String name = "HOMEWORK";
     private LinkedList<User> usersInfo;
     private LinkedList<Company> companyInfo;
-    private int timeStamp;
+    private int timeStamp=TimeStamp.getTimeStamp();
 
 
     public Network() {
         usersInfo = new LinkedList<>();
-        companyInfo = new LinkedList<Company>();
+        companyInfo = new LinkedList<>();
     }
 
     @Override
@@ -57,7 +40,7 @@ public class Network implements INetwork {
         }
 
         else {
-            a.printwall();
+            a.printWall();
         }
 
     }
@@ -82,23 +65,25 @@ public class Network implements INetwork {
 
     //not finished
     //postMsg function
-    public void postMessage(String username, String message,
-                            int privacy, int ageLimit, int timestamp) {
+
+
+    public void postMessage(String username,UserMsg message,
+                            int privacy, int ageLimit) {
         Profile a = findUser(username);
-        UserMsg m = new UserMsg(message,username,0,0);
-        a.postUsrMsg(m);
+        message.setTimeStamp(TimeStamp.getTimeStamp());
+        a.postUsrMsg(message);
     }
 
-    public void postMsgList(LinkedList<User> a ,String username, String message,
-                           int privacy, int ageLimit, int timestamp){
-        UserMsg msg= new UserMsg(message,username,0,0);
+
+    public void postMsgList(LinkedList<User> a ,UserMsg message,int privacy,int ageLimit){
         for (int i = 0;i<a.size();i++){
-           a.get(i).postUsrMsg(msg);
+          postMessage(a.get(i).getUsername(),message,privacy,ageLimit);
         }
     }
-    public void postMsgAll(String username, String message,
-                           int privacy, int ageLimit, int timestamp){
-        postMsgList(usersInfo,username,message,privacy,ageLimit,timestamp);
+
+    public void postMsgAll(UserMsg message,
+                           int privacy, int ageLimit){
+        postMsgList(usersInfo,message,privacy,ageLimit);
     }
 
     public void printUsr(){
@@ -108,10 +93,6 @@ public class Network implements INetwork {
     }
 
 
-
-
-
-
     //post ad function
     public void printCom(){
         for (int i = 0; i <companyInfo.size() ; i++) {
@@ -119,28 +100,30 @@ public class Network implements INetwork {
         }
     }
 
-    public void postAd(String username, String message, int ageLimit,
-                       boolean paid, int timestamp) {
+
+    //timeStamp should getfrom the system, so get rid of the parameter of timeStamp
+    public void postAdByUser(String username, Ad ad, int ageLimit,
+                       boolean paid) {
         Profile a = findUser(username);
-        Ad m = new Ad(message,username,ageLimit,timestamp);
-        a.postAd(m);
+        ad.setTimeStamp(TimeStamp.getTimeStamp());
+        a.postAd(ad);
     }
 
 
-    public void postAdByList(LinkedList<User> usrList,String adContent,String companyName
-                             ,int ageLimit,boolean paid,int timeStamp){
-        Ad m = new Ad(adContent,companyName,ageLimit,timeStamp);
+    public void postAdByList(LinkedList<User> usrList,Ad ad
+                             ,int ageLimit,boolean paid){
         for (int i = 0; i < usrList.size() ; i++) {
-            usrList.get(i).postAd(m);
+            postAdByUser(usrList.get(i).getUsername(),ad,ageLimit,paid);
         }
 
     }
 
-    public void postAdAll(String adContent,String companyName
-            ,int ageLimit,boolean paid,int timeStamp){
-        Ad m = new Ad(adContent,companyName,ageLimit,timeStamp);
-        postAdByList(usersInfo,adContent,companyName,ageLimit,paid,timeStamp);
+    public void postAdAll(Ad adContent,String companyName
+            ,int ageLimit,boolean paid){
+        postAdByList(usersInfo,adContent,ageLimit,paid);
     }
+
+
 
 
     public void connect(String username1, String username2) {

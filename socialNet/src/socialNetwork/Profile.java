@@ -13,20 +13,21 @@ import datastru.*;
 
 public class Profile {
 
-    private String username;
+    private String username; //for user, it's username, but for company,it's company name
     private int age;
     public LinkedList<Message> wall;
-    private LinkedList<Ad> adList;
-    private LinkedList<UserMsg> friMsg;
+    private PriorityQueue<Ad> adList;
+    private PriorityQueue<UserMsg> friMsg;
     private LinkedList <Profile> friList;
+
 
 
     public Profile() {
         // TODO Auto-generated constructor stub
         wall = new LinkedList<>();
-        adList = new LinkedList<>();
+        adList = new PriorityQueue<>();
         friList = new LinkedList<>();
-        friMsg = new LinkedList<>();
+        friMsg = new PriorityQueue<>();
     }
 
 
@@ -50,21 +51,28 @@ public class Profile {
 
     // unclear the function of post ,may overwrite it later
     public void postUsrMsg(UserMsg m) {
-        friMsg.addFirst(m);
+        friMsg.push(m,m.getTimeStamp());
     }
 
+
+    //use timeStamp as priority
     public void postAd(Ad ad){
-        adList.addFirst(ad);
+        adList.push(ad,ad.getTimeStamp());
     }
 
     public void post(){
-        for (int i = 0; i <friMsg.size() ; i++) {
+        System.out.println(friMsg.size());
+        int c = friMsg.size();
+        //here we can not use i<frimsg.size(),cause every time we pop,the size will minus 1.
+        for (int i = 0; i <c ; i++) {
             if (i%4==0){
-                adList.popFirst().print();
+                Ad b = adList.pop();
+                wall.addFirst(b);
             }
-            friMsg.get(i).print();
-
+            wall.addFirst(friMsg.pop());
         }
+
+
     }
 
     public boolean compareByName(String username) {
@@ -76,10 +84,23 @@ public class Profile {
         return username;
     }
 
-    public void printwall(){
+    public void printWall(){
         System.out.println("this is "+username+"'s wall");
         System.out.print("\n");
         post();
         System.out.println(wall.toString());
+    }
+
+    public void sentMsg(String m,int privacy,int ageLimit){
+        UserMsg meg = new UserMsg(m,username,ageLimit,privacy,0);
+        for (int i = 0; i <friList.size() ; i++) {
+            friList.get(i).postUsrMsg(meg);
+        }
+    }
+
+    public void printADlist(){
+        for (int i = 0; i <adList.size() ; i++) {
+            adList.getData().get(i).print();
+        }
     }
 }
