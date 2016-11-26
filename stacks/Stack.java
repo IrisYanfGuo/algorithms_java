@@ -15,7 +15,7 @@ public class Stack <E>{
 	}
 	
 	public void push(E o){
-		data.addFirst(o);
+		data.addLast(o);
 	}
 	
 	public E pop(){
@@ -36,4 +36,11 @@ public class Stack <E>{
 		return data.isEmpty();
 	}
 
+	@Override
+	public String toString() {
+		return "Stack{" +
+				"data=" + data +
+				", compacity=" + compacity +
+				'}';
+	}
 }
