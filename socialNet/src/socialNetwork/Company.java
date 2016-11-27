@@ -4,11 +4,14 @@ import datastru.LinkedList;
 
 /**
  * Created by Iris on 2016/11/7.
+ * extend from profile, use to extend
  */
 public class Company extends Profile{
     private String name;
     private String username;
-    private LinkedList<Message> ad;
+
+    // use the ad to represent the ad posted by this company.
+    private LinkedList<Ad> ad;
 
     public Company() {
         ad = new LinkedList();

@@ -2,6 +2,9 @@ package socialNetwork;
 
 /**
  * ClassName:TimeStamp
+ * the TimeStamp is a class to control the timeStamp of the entire program.
+ * it use a static function get TimeStamp and static variable timeStamp.
+ * everytime this function called, the timeStamo++;
  * Version:1.0
  * Time : 00:51 23.Nov 2016
  *

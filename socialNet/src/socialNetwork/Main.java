@@ -25,7 +25,8 @@ public class Main {
 
 
 
-		/////////////////////////// initialize//////////////////////////////
+		/////////////////////////// initialize///////////////////////////////////////
+		///using the .txt file to initialize, create some users,companys , and posted some msgs and ads,then print///
 		Network net = new Network();
 
 		
@@ -50,7 +51,7 @@ public class Main {
 			String author = line1.split(" ")[1];
 			int ageLimit = Integer.parseInt(line1.split(" ")[2]);
 			int privacy  = Integer.parseInt(line1.split(" ")[3]);
-			UserMsg msg = new UserMsg(content,author,ageLimit,privacy,TimeStamp.getTimeStamp());
+			UserMsg msg = new UserMsg(content,author,ageLimit,privacy,0);
 			net.postMsgAll(msg,msg.getPrivacy(),msg.getAgeLimit());
 			line1 = readMsg.readLine();
 		}
@@ -75,18 +76,20 @@ public class Main {
 			String author = line3.split(" ")[1];
 			int ageLimit = Integer.parseInt(line3.split(" ")[2]);
 			boolean paid  = Boolean.parseBoolean(line3.split(" ")[3]);
-			Ad ad= new Ad(content,author,ageLimit,TimeStamp.getTimeStamp(),paid);
+			Ad ad= new Ad(content,author,ageLimit,0,paid);
 			net.postAdAll(ad,author,ageLimit,paid);
 			line3 = readAd.readLine();
 		}
 		System.out.print("read ads from ad.txt completed\n post these ads to all users");
 
 
-		///////////////////////////initialize////////////////////////////
+		///////////////////////////initialize finished////////////////////////////
 
 
 
 		net.findUser("userB").printADlist();
+		net.findUser("userB").printUseMsgList();
+
 		net.printUsr();
 		net.printCom();
 		net.printWall("userB");

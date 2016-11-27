@@ -1,5 +1,7 @@
 package socialNetwork;
 
+import datastru.LinkedList;
+
 /**
  * ClassName:Ad
  * Version:1.0
@@ -10,6 +12,7 @@ package socialNetwork;
 public class Ad extends Message{
 
     boolean paid;
+
     public Ad() {
     }
 

@@ -2,10 +2,12 @@ package socialNetwork;
 
 /**
  * ClassName:UserMsg
- * Version:1.0
+ * extends from the Message class.
+ * use to represent the user message
+ * Version:2.0
  * Time : 12:57 20.Nov 2016
  *
- * @author Yanfang Guo <yanfguo@outlook.com <yanfguo@vub.ac.be>
+ * @author Yanfang Guo <yanfguo@outlook.com> <yanfguo@vub.ac.be>
  */
 public class UserMsg extends Message {
 

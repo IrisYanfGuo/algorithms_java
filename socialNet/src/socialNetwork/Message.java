@@ -4,7 +4,7 @@ package socialNetwork;
  * A Message class is a data structure for a message showing on the wall. It contains 5 property, content,author,
  * largeage and privacy.And to get and set these properties, all this properties have getPropertity
  * and set Property function.
- * version:1.0 time 7th Nov
+ * version:2.0 time 27th Nov
  *
  * @author Yanfang Guo <yanfguo@outlook.com> <yanfguo@vub.ac.be>
  */
