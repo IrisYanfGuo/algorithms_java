@@ -14,7 +14,7 @@ public class Queue<E> {
 	}
 	
 	public void push(E o) {
-		data.addFirst(o);
+		data.addLast(o);
 	}
 	
 	public E pop() {
