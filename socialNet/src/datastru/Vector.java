@@ -6,7 +6,7 @@ package datastru;
  * @author Yanfang Guo <yanfguo@outlook.com> <yanfguo@vub.ac.be>
  */
 
-public class Vector<E> {
+public class Vector<E extends Object> {
 
 	/*
 	 * this is a class about Vector

@@ -10,7 +10,6 @@ package socialNetwork;
 public interface INetwork {
     /**
      * Create user profile.
-     *
      * @param name the name of the user
      * @param age  the age
      */
@@ -31,7 +30,7 @@ public interface INetwork {
     void printWall(String username);
 
     /**
-     * Post message to user by his username
+     * Post message to user by his or her username
      *
      * @param username the username
      * @param message  the message created by user

@@ -27,6 +27,30 @@ public class Profile {
     private PriorityQueue<UserMsg> usrMsg;
     private LinkedList <Profile> friList;
 
+    // use to record rates
+    private class Rate{
+        String comName;
+        int rate;
+
+        public Rate(String comName, int rate) {
+            this.comName = comName;
+            this.rate = rate;
+        }
+
+        public void setRate(int rate) {
+            this.rate = rate;
+        }
+
+        public int getRate() {
+            return rate;
+        }
+
+        public String getComName() {
+            return comName;
+        }
+    }
+
+    private Vector<Rate> rateVector;
 
 
     public Profile() {
@@ -35,6 +59,7 @@ public class Profile {
         adList = new PriorityQueue<>();
         friList = new LinkedList<>();
         usrMsg = new PriorityQueue<>();
+        rateVector = new Vector<>();
     }
 
 
@@ -45,10 +70,15 @@ public class Profile {
         this.username = username;
     }
 
+    // only used in creating company profiles
+    // and set all company name to -1
+    public Profile(String companyName){
+       this(companyName,-1);
+    }
 
     @Override
     public String toString() {
-        return "Profile: " + username + age;
+        return "Profile: " + username;
     }
 
     /**
@@ -122,6 +152,12 @@ public class Profile {
         }
     }
 
+    public void printFriList(){
+        for (int i = 0; i <friList.size() ; i++) {
+            System.out.println(friList.get(i).getUsername());
+        }
+    }
+
     //use this method to test some function
 
     public void printUseMsgList(){
@@ -129,4 +165,29 @@ public class Profile {
             usrMsg.getData().get(i).print();
         }
     }
+
+    public void addFri(Profile a){
+        friList.addFirst(a);
+    }
+
+    protected LinkedList<Profile> getFriList(){
+        return friList;
+    }
+
+    public void addRateList(String comName, int rate){
+        Rate a = new Rate(comName,rate);
+        rateVector.addLast(a);
+
+    }
+
+    public int extraTime(String comName){
+        for (int i = 0; i <rateVector.size() ; i++) {
+            if (comName==rateVector.get(i).getComName()){
+                return rateVector.get(i).getRate()*3600;
+            }
+        }
+        return 0;
+    }
+
+
 }

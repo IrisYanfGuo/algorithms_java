@@ -14,93 +14,86 @@ import java.nio.file.Paths;
  */
 public class Main {
 
-	public Main() {
-		// TODO Auto-generated constructor stub
-	}
+    public Main() {
+        // TODO Auto-generated constructor stub
+    }
 
-	public static void main(String[] args) throws FileNotFoundException, IOException {
-		// TODO Auto-generated method stub
-
-
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+        // TODO Auto-generated method stub
 
 
-
-		/////////////////////////// initialize///////////////////////////////////////
-		///using the .txt file to initialize, create some users,companys , and posted some msgs and ads,then print///
-		Network net = new Network();
-
-		
-		//create some users , initialize
-		//may change the directory 
-		BufferedReader readUser = new BufferedReader(new FileReader("./src/socialNetwork/user.txt"));
-		String line = readUser.readLine();
-		while (line != null) {
-			String[] string1 = line.split(" ");
-			net.createUserProfile(string1[0],Integer.parseInt(string1[1]));
-			System.out.println(line);
-			line = readUser.readLine();
-		} 
+        /////////////////////////// initialize///////////////////////////////////////
+        ///using the .txt file to initialize, create some users,companys , and posted some msgs and ads,then print///
+        Network net = new Network();
 
 
-		//post some messages to all users
-		BufferedReader readMsg = new BufferedReader(new FileReader("./src/socialNetwork/msg1.txt"));
-		
-		String line1 = readMsg.readLine();
-		while (line1 != null) {
-			String content = line1.split(" ")[0];
-			String author = line1.split(" ")[1];
-			int ageLimit = Integer.parseInt(line1.split(" ")[2]);
-			int privacy  = Integer.parseInt(line1.split(" ")[3]);
-			UserMsg msg = new UserMsg(content,author,ageLimit,privacy,0);
-			net.postMsgAll(msg,msg.getPrivacy(),msg.getAgeLimit());
-			line1 = readMsg.readLine();
-		}
-		System.out.print("read Msg from msg.txt completed\npost these msgs to all users");
+        //create some users , initialize
+        //may change the directory
+        BufferedReader readUser = new BufferedReader(new FileReader("./src/socialNetwork/user.txt"));
+        String line = readUser.readLine();
+        while (line != null) {
+            String[] string1 = line.split(" ");
+            net.createUserProfile(string1[0], Integer.parseInt(string1[1]));
+            System.out.println(line);
+            line = readUser.readLine();
+        }
 
 
-		//create some companys , initialize
-		BufferedReader readCom = new BufferedReader(new FileReader("./src/socialNetwork/company.txt"));
+        //post some messages to all users
+        BufferedReader readMsg = new BufferedReader(new FileReader("./src/socialNetwork/msg1.txt"));
 
-		String line2 = readCom.readLine();
-		while (line2 != null) {
-			net.createCorporateProfile(line2);
-			line2 = readCom.readLine();
-		}
-		System.out.print("read company profile from company.txt completed");
-		//create some ads ,initialize
-		BufferedReader readAd= new BufferedReader(new FileReader("./src/socialNetwork/ad.txt"));
-
-		String line3 = readAd.readLine();
-		while (line3 != null) {
-			String content = line3.split(" ")[0];
-			String author = line3.split(" ")[1];
-			int ageLimit = Integer.parseInt(line3.split(" ")[2]);
-			boolean paid  = Boolean.parseBoolean(line3.split(" ")[3]);
-			Ad ad= new Ad(content,author,ageLimit,0,paid);
-			net.postAdAll(ad,author,ageLimit,paid);
-			line3 = readAd.readLine();
-		}
-		System.out.print("read ads from ad.txt completed\n post these ads to all users");
+        String line1 = readMsg.readLine();
+        while (line1 != null) {
+            String content = line1.split(" ")[0];
+            String author = line1.split(" ")[1];
+            int ageLimit = Integer.parseInt(line1.split(" ")[2]);
+            int privacy = Integer.parseInt(line1.split(" ")[3]);
+            UserMsg msg = new UserMsg(content, author, ageLimit, privacy, 0);
+            net.postMsgAll(msg, msg.getPrivacy(), msg.getAgeLimit());
+            line1 = readMsg.readLine();
+        }
+        System.out.print("read Msg from msg.txt completed\npost these msgs to all users");
 
 
-		///////////////////////////initialize finished////////////////////////////
+        //create some companys , initialize
+        BufferedReader readCom = new BufferedReader(new FileReader("./src/socialNetwork/company.txt"));
+
+        String line2 = readCom.readLine();
+        while (line2 != null) {
+            net.createCorporateProfile(line2);
+            line2 = readCom.readLine();
+        }
+        System.out.print("read company profile from company.txt completed");
+        //create some ads ,initialize
+        BufferedReader readAd = new BufferedReader(new FileReader("./src/socialNetwork/ad.txt"));
+
+        String line3 = readAd.readLine();
+        while (line3 != null) {
+            String content = line3.split(" ")[0];
+            String author = line3.split(" ")[1];
+            int ageLimit = Integer.parseInt(line3.split(" ")[2]);
+            boolean paid = Boolean.parseBoolean(line3.split(" ")[3]);
+            Ad ad = new Ad(content, author, ageLimit, 0, paid);
+            net.postAdAll(ad, author, ageLimit, paid);
+            line3 = readAd.readLine();
+        }
+        System.out.print("read ads from ad.txt completed\n post these ads to all users");
 
 
-
-		net.findUser("userB").printADlist();
-		net.findUser("userB").printUseMsgList();
-
-		net.printUsr();
-		net.printCom();
-		net.printWall("userB");
-		net.printWall("ua");
+        ///////////////////////////initialize finished////////////////////////////
 
 
+        //net.findUser("userB").printADlist();
+       // net.findUser("userB").printUseMsgList();
+
+        net.printUsr();
+        net.printCom();
+        net.printWall("userB");
+
+        net.findUser("haha");
 
 
-
-	}
-
+    }
 
 
 }

@@ -1,3 +1,5 @@
+package datastru;
+
 /**
  * Class Stack , with the initialize compacity 10. based on Vector
  * version:2.0 18th Nov
@@ -15,7 +17,7 @@ public class Stack <E>{
 	}
 	
 	public void push(E o){
-		data.addLast(o);
+		data.addFirst(o);
 	}
 	
 	public E pop(){
@@ -36,11 +38,4 @@ public class Stack <E>{
 		return data.isEmpty();
 	}
 
-	@Override
-	public String toString() {
-		return "Stack{" +
-				"data=" + data +
-				", compacity=" + compacity +
-				'}';
-	}
 }

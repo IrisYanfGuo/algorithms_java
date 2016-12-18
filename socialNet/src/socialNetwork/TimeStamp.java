@@ -16,8 +16,8 @@ public class TimeStamp {
     private static int timeStamp=0;
 
     public static int getTimeStamp() {
-        timeStamp++;
-        return timeStamp;
+
+        return (int)System.currentTimeMillis()/1000;
     }
 
 

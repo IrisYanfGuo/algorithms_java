@@ -6,9 +6,12 @@ package socialNetwork;
  * Time : 20:05 27.Nov 2016
  *
  * @author Yanfang Guo <yanfguo@outlook.com ></yanfguo@outlook.com><yanfguo@vub.ac.be>
-*/
+ */
+
 import datastru.*;
 
+// if you want to find a user, try to use the findProfile function instead of writing a for loop to find it by your
+//-self
 
 /**
  * The type Network.
@@ -16,9 +19,9 @@ import datastru.*;
 public class Network implements INetwork {
     private String name = "HOMEWORK";
     //userInfo is a linkedList to store the information of user
-    private LinkedList<User> usersInfo;
+    private LinkedList<Profile> usersInfo;
     //companyInfo is a linkedList to store the information of company
-    private LinkedList<Company> companyInfo;
+    private LinkedList<Profile> companyInfo;
 
 
     /**
@@ -35,16 +38,13 @@ public class Network implements INetwork {
     }
 
     public void createUserProfile(String name, int age) {
-        User t = new User(name, age);
+        Profile t = new Profile(name, age);
         usersInfo.addFirst(t);
-        t.getUsername();
     }
-
     public void createCorporateProfile(String name) {
-        Company a = new Company(name);
+        Profile a = new Profile(name);
         companyInfo.addFirst(a);
     }
-
 
     ///not finished function
     public void printWall(String username) {
@@ -64,26 +64,31 @@ public class Network implements INetwork {
      * @return the profile
      */
     public Profile findUser(String username) {
-        Profile a = null;
-        boolean find = false;
+
         for (int i = 0; i < usersInfo.size(); i++) {
-            a = usersInfo.get(i);
-            String b = a.getUsername();
-            if (b.equals(username)) {
-                find = true;
-                break;
+            Profile temp = usersInfo.get(i);
+            if (username.equals(temp.getUsername())){
+                return temp;
             }
         }
-        if (find == true) {
-            return a;
-        } else {
-            return null;
-        }
+        System.out.println("can not find the user :"+username);
+        return null;
     }
 
     //not finished
     //postMsg function
 
+
+    public Profile findCompany(String comName){
+        for (int i = 0; i < companyInfo.size(); i++) {
+            Profile temp = companyInfo.get(i);
+            if (comName.equals(temp.getUsername())){
+                return temp;
+            }
+        }
+        System.out.println("can not find the user :"+comName);
+        return null;
+    }
 
     public void postMessage(String username, UserMsg message,
                             int privacy, int ageLimit) {
@@ -103,7 +108,7 @@ public class Network implements INetwork {
      * @param privacy  the privacy
      * @param ageLimit the age limit
      */
-    private void postMsgList(LinkedList<User> a, UserMsg message, int privacy, int ageLimit) {
+    private void postMsgList(LinkedList<Profile> a, UserMsg message, int privacy, int ageLimit) {
         for (int i = 0; i < a.size(); i++) {
             postMessage(a.get(i).getUsername(), message, privacy, ageLimit);
         }
@@ -137,17 +142,18 @@ public class Network implements INetwork {
 //post ad function
     public void printCom() {
         for (int i = 0; i < companyInfo.size(); i++) {
-            System.out.println(companyInfo.get(i).getName());
+            System.out.println(companyInfo.get(i).toString());
         }
     }
 
 
-    //timeStamp should get from the system, so get rid of the parameter of timeStamp
+    //timeStamp should get from the system, and if the company is on the user's starList ,add it's timeStamp
     public void postAdByUser(String username, Ad ad, int ageLimit,
                              boolean paid) {
         Profile a = findUser(username);
         if (a.getAge() >= ageLimit) {
-            ad.setTimeStamp(TimeStamp.getTimeStamp());
+            int t = a.extraTime(ad.getAuthor());
+            ad.setTimeStamp(TimeStamp.getTimeStamp()+t);
             a.postAd(ad);
         }
     }
@@ -161,7 +167,7 @@ public class Network implements INetwork {
      * @param ageLimit the age limit
      * @param paid     the paid
      */
-    private void postAdByList(LinkedList<User> usrList, Ad ad
+    private void postAdByList(LinkedList<Profile> usrList, Ad ad
             , int ageLimit, boolean paid) {
         for (int i = 0; i < usrList.size(); i++) {
             postAdByUser(usrList.get(i).getUsername(), ad, ageLimit, paid);
@@ -185,12 +191,26 @@ public class Network implements INetwork {
 
 
     public void connect(String username1, String username2) {
+        Profile t1 =  findUser(username1);
+        Profile t2 =  findUser(username2);
+        if ((t1 != null) && (t2 != null)) {
+            t1.addFri(t2);
+            t2.addFri(t1);
+        }else {
+            System.out.println(" can not find the user");
+        }
     }
 
+
     public void printFriendList(String username) {
+        Profile t =  findUser(username);
+        t.printFriList();
     }
 
     public void rate(String username, String corporateName, int stars) {
+        Profile a =  findUser(username);
+        a.addRateList(corporateName,stars);
+
     }
 
     public int distance(String username1, String username2) {
