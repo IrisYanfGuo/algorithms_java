@@ -1,7 +1,5 @@
 package datastru;
 
-import java.util.Arrays;
-import java.util.Collection;
 
 /**
  * Class Vector

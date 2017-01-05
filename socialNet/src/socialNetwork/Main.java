@@ -88,9 +88,21 @@ public class Main {
 
         net.printUsr();
         net.printCom();
-        net.printWall("userB");
 
-        net.findUser("haha");
+        net.connect("userA","userB");
+        net.connect("userA","userC");
+        net.connect("userB","userD");
+        net.connect("userC","userD");
+        net.connect("userD","userE");
+
+        System.out.println(net.distance("userA","userE"));
+        System.out.println(net.distanceExcludeCorporate("userA","userE"));
+        net.printPath("userA","userE");
+        net.printPathExcludeCorporate("userA","userE");
+
+       // net.printWall("userB");
+
+      //  net.findUser("haha");
 
 
     }

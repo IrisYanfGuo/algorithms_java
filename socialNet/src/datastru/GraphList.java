@@ -7,13 +7,14 @@ package datastru;
  *
  * @author Yanfang Guo <yanfguo@outlook.com <yanfguo@vub.ac.be>
  */
-public class GraphList<K extends Comparable<K>> {
+public class GraphList<K> {
 
     public static int INF = 100000;
 
-    public class Node implements Comparable {
+    public class Node {
         private int ivex; // the index of the vertex
         private K key;
+       // private V value;
         private Vector<Edge> edges;
         private boolean visited;
 
@@ -56,14 +57,7 @@ public class GraphList<K extends Comparable<K>> {
         }
 
         // we can rewrite the for loop to find
-        public int compareTo(Object node) {
 
-            return ((Node) node).key.compareTo(key);
-        }
-
-        public int compareTo(K key2) {
-            return key.compareTo(key2);
-        }
     }
 
     private class Edge {
@@ -450,7 +444,7 @@ public class GraphList<K extends Comparable<K>> {
             // now j is the smallest
 
             if (index > nodes.size() - 1) {
-                System.out.println("not all nodes are connected");
+               // System.out.println("not all nodes are connected");
 
             } else {
                 nodes.get(index).visited = true; // add it to successed
@@ -499,10 +493,10 @@ public class GraphList<K extends Comparable<K>> {
         }
         */
 
-        for (int i = 0; i <result.size() ; i++) {
-            System.out.print("path from" + nodes.get(sv)+ " to"+ nodes.get(i)+": ");
-            System.out.println(result.get(i));
-        }
+   //     for (int i = 0; i <result.size() ; i++) {
+    //        System.out.print("path from" + nodes.get(sv)+ " to"+ nodes.get(i)+": ");
+      //      System.out.println(result.get(i));
+        //}
 
         return result;
     }

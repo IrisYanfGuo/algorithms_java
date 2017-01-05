@@ -189,5 +189,12 @@ public class Profile {
         return 0;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return ((Profile)obj).username.equals(username);
+    }
 
+    public boolean equals(Profile a){
+        return a.username.equals(username);
+    }
 }

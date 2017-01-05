@@ -23,6 +23,9 @@ public class Network implements INetwork {
     //companyInfo is a linkedList to store the information of company
     private LinkedList<Profile> companyInfo;
 
+    private GraphList<Profile> graph ;
+
+    private GraphList<Profile> graphWithoutCom;
 
     /**
      * Instantiates a new Network.
@@ -30,7 +33,10 @@ public class Network implements INetwork {
     public Network() {
         usersInfo = new LinkedList<>();
         companyInfo = new LinkedList<>();
+        graph = new GraphList<>();
+        graphWithoutCom = new GraphList<>();
     }
+
 
     @Override
     public String toString() {
@@ -40,10 +46,13 @@ public class Network implements INetwork {
     public void createUserProfile(String name, int age) {
         Profile t = new Profile(name, age);
         usersInfo.addFirst(t);
+        graph.addNode(t);
+        graphWithoutCom.addNode(t);
     }
     public void createCorporateProfile(String name) {
         Profile a = new Profile(name);
         companyInfo.addFirst(a);
+        graph.addNode(a);
     }
 
     ///not finished function
@@ -190,12 +199,17 @@ public class Network implements INetwork {
     }
 
 
+
     public void connect(String username1, String username2) {
         Profile t1 =  findUser(username1);
         Profile t2 =  findUser(username2);
         if ((t1 != null) && (t2 != null)) {
             t1.addFri(t2);
             t2.addFri(t1);
+            graph.addEdge(t1,t2);
+            graph.addEdge(t2,t1);
+            graphWithoutCom.addEdge(t2,t1);
+            graphWithoutCom.addEdge(t1,t2);
         }else {
             System.out.println(" can not find the user");
         }
@@ -209,22 +223,50 @@ public class Network implements INetwork {
 
     public void rate(String username, String corporateName, int stars) {
         Profile a =  findUser(username);
+        Profile com = findCompany(corporateName);
+       connect(username,corporateName);
         a.addRateList(corporateName,stars);
-
     }
 
     public int distance(String username1, String username2) {
-        return 0; //unsolved
+        Profile a = findUser(username1);
+        Profile b = findUser(username2);
+
+        Vector<Vector<GraphList<Profile>.Node>> result = graph.dijkstra(a);
+        GraphList.Node t=graph.findNode(b);
+
+        return (result.get(t.getIvex())).size()-1;
     }
 
     public void printPath(String username1, String username2) {
+        Profile a = findUser(username1);
+        Profile b = findUser(username2);
+
+        Vector<Vector<GraphList<Profile>.Node>> result = graph.dijkstra(a);
+        GraphList.Node t=graph.findNode(b);
+
+        System.out.println(result.get(t.getIvex()));
     }
 
     public int distanceExcludeCorporate(String username1, String username2) {
-        return 0; // unsolved
+
+        Profile a = findUser(username1);
+        Profile b = findUser(username2);
+
+        Vector<Vector<GraphList<Profile>.Node>> result = graphWithoutCom.dijkstra(a);
+        GraphList.Node t=graphWithoutCom.findNode(b);
+
+        return (result.get(t.getIvex())).size()-1;
     }
 
     public void printPathExcludeCorporate(String username1, String username2) {
+        Profile a = findUser(username1);
+        Profile b = findUser(username2);
+
+        Vector<Vector<GraphList<Profile>.Node>> result = graphWithoutCom.dijkstra(a);
+        GraphList.Node t=graphWithoutCom.findNode(b);
+
+        System.out.println(result.get(t.getIvex()));
     }
 
 
