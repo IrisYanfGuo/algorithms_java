@@ -1,12 +1,15 @@
 package datastru;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 /**
  * Class Vector
  * version:2.0  2016/11/18
  * @author Yanfang Guo <yanfguo@outlook.com> <yanfguo@vub.ac.be>
  */
 
-public class Vector<E extends Object> {
+public class Vector<E> {
 
 	/*
 	 * this is a class about Vector
@@ -37,13 +40,26 @@ public class Vector<E extends Object> {
 		return data[index];
 	}
 
-	public boolean contains(E obj) {
+	public E contains(E obj) {
 		for (int i = 0; i < count; i++) {
-			if (data[i] == obj)
-				return true;
+			if (data[i].equals(obj) )
+				return data[i];
 		}
-		return false;
+		return null;
 	}
+
+	public Object findIndex(E e){
+        Object res = new Object();
+        for (int i = 0; i <count ; i++) {
+            if (data[i].equals(e)){
+                res = i;
+            }else {
+                System.out.println("can not find the node");
+                return false;
+            }
+        }
+        return res;
+    }
 
 	public void set(int index, E obj) {
 		data[index] = obj;
@@ -126,6 +142,13 @@ public class Vector<E extends Object> {
 
 	}
 
+	public Vector<E> deepcopy(){
+		Vector<E> v = new Vector<E>();
+		for (int i = 0; i <size() ; i++) {
+			v.addLast(data[i]);
+		}
+		return v;
+	}
 	// 8. interleaves two vectors. and it return to a new vector and the
 	// original vector stay the same
 	public Vector interleaves(Vector v2) {
@@ -153,6 +176,18 @@ public class Vector<E extends Object> {
 	}
 
 	public boolean isFull() {
-        return count >= capacity;
+		if (count >= capacity)
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public String toString() {
+		String s ="";
+		for (int i = 0; i <count ; i++) {
+			s += get(i)+" ";
+		}
+		return s;
 	}
 }

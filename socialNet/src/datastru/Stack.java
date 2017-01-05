@@ -15,9 +15,13 @@ public class Stack <E>{
 
 		data = new Vector<E>(compacity);
 	}
+
+	public Stack(Vector<E> v){
+		data = v;
+	}
 	
 	public void push(E o){
-		data.addFirst(o);
+		data.addLast(o);
 	}
 	
 	public E pop(){
@@ -34,8 +38,20 @@ public class Stack <E>{
 		return data.size();
 	}
 	
-	private boolean isEmpty() {
+	public boolean isEmpty() {
 		return data.isEmpty();
 	}
 
+	@Override
+	public String toString() {
+		return "Stack{" +
+				"data=" + data +
+				'}';
+	}
+
+	public Stack<E> deepcopy(){
+		Vector<E> t = data.deepcopy();
+		Stack<E> s = new Stack<E>(t);
+		return s;
+	}
 }
