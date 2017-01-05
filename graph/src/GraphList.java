@@ -2,15 +2,18 @@
 /**
  * ClassName:GraphList
  * Version:1.0
- * Time : 13:23 11.Dec 2016
+ * Time : 13:23 5.Jan 2016
  *
  * @author Yanfang Guo <yanfguo@outlook.com <yanfguo@vub.ac.be>
  */
 public class GraphList<K extends Comparable<K>> {
 
-    public class Node{
+    public static int INF = 100000;
+
+    public class Node implements Comparable {
+        private int ivex; // the index of the vertex
         private K key;
-        private LinkedList<Edge> edges;
+        private Vector<Edge> edges;
         private boolean visited;
 
         public Node(K key) {
@@ -20,11 +23,19 @@ public class GraphList<K extends Comparable<K>> {
         public Node(K key, boolean visited) {
             this.key = key;
             this.visited = visited;
-            edges = new LinkedList<>();
+            edges = new Vector<>();
         }
 
         public K getKey() {
             return key;
+        }
+
+        public int getIvex() {
+            return ivex;
+        }
+
+        public void setIvex(int ivex) {
+            this.ivex = ivex;
         }
 
         public boolean isVisited() {
@@ -49,7 +60,7 @@ public class GraphList<K extends Comparable<K>> {
             return ((Node) node).key.compareTo(key);
         }
 
-        public int compareTo(K key2){
+        public int compareTo(K key2) {
             return key.compareTo(key2);
         }
     }
@@ -78,15 +89,16 @@ public class GraphList<K extends Comparable<K>> {
         return s;
     }
 
-    private LinkedList<Node> nodes;
+    private Vector<Node> nodes;
 
     public GraphList() {
-        nodes = new LinkedList<>();
+        nodes = new Vector<>();
     }
 
     public void addNode(K key) {
         Node n = new Node(key);
         nodes.addLast(n);
+        nodes.getLast().setIvex(nodes.size() - 1);
     }
 
     // before you begin to search a graph, you need to set all the elements unvisited
@@ -377,16 +389,121 @@ public class GraphList<K extends Comparable<K>> {
 
     }
 
+    public int getWeight(int start, int end) {
+        if (start == end) {
+            return 0;
+        }
+
+        Node sNode = nodes.get(start);
+
+        for (int i = 0; i < sNode.edges.size(); i++) {
+            if (sNode.edges.get(i).toNode.ivex == end) {
+                return (int) sNode.edges.get(i).weight;
+            }
+        }
+        return INF;
+    }
+
 
     // shortest path algorithms
     // focus on finding single-source shortest path
-    public void dijikstra(K key) {
-        Node n = findNode(key);
-        Vector<Edge> dist = new Vector<>();
-        // first, initialize the dist
-        setAllVisitedF();
+
+    public Vector<Vector<Node>> dijkstra(K key) {
+        int sv = findNode(key).getIvex(); //  find start vertex
+        setAllVisitedF();  // use the visited variable to record whether find a path or not
+
+        int[] prev = new int[nodes.size()];
+
+        int[] dist = new int[nodes.size()];
 
 
+        // initialize
+        for (int i = 0; i < nodes.size(); i++) {
+            prev[i] = sv;
+            dist[i] = INF;
+        }
+        //
+        nodes.get(sv).visited = true;  // set it is visited
+        prev[sv] = sv;
+        for (int i = 0; i < nodes.size(); i++) {
+            dist[i] = getWeight(sv, i);
+        }
+
+
+        // n-1 step to find all short path
+        for (int i = 0; i < nodes.size() - 1; i++) {
+            // first ,find the first unvisited short path
+
+            int index = INF;
+            int min = INF;
+
+            for (int j = 0; j < nodes.size(); j++) {
+
+
+                // if unvisited and is smaller
+                if ((!nodes.get(j).isVisited()) && (min > dist[j])) {
+                    min = dist[j];
+                    index = j;
+                }
+            }
+            // now j is the smallest
+
+            if (index > nodes.size() - 1) {
+                System.out.println("not all nodes are connected");
+
+            } else {
+                nodes.get(index).visited = true; // add it to successed
+                // update the prev and dist
+                for (int k = 0; k < nodes.size(); k++) {
+                    if (!(nodes.get(k).isVisited()) && (dist[k] > getWeight(index, k) + dist[index])) {
+                        prev[k] = index;
+                        dist[k] = getWeight(index, k) + dist[index];
+                        if (dist[k] < 0) {
+                         //   System.out.println("alarm:step " + i + " k:" + k);
+                        }
+                    }
+                }
+
+           //     System.out.println("step " + i);
+
+            }
+        }
+
+        // print the result
+
+        Vector<Vector<Node>> result = new Vector<>();
+
+        for (int i = 0; i < nodes.size(); i++) {
+
+            Vector<Node> tmp = new Vector<>();
+            int t = i;
+
+            if (nodes.get(t).isVisited()){
+
+               while (t!=sv){
+                   tmp.addFirst(nodes.get(t));
+                   t = prev[t];
+               }
+               tmp.addFirst(nodes.get(sv));
+            }else {
+               tmp = null;
+            }
+
+            result.addLast(tmp);
+        }
+      /*  for (int i = 0; i < nodes.size(); i++) {
+            System.out.print(nodes.get(prev[i]) + " ");
+            System.out.print(dist[i]);
+            System.out.println();
+        }
+        */
+
+        for (int i = 0; i <result.size() ; i++) {
+            System.out.print("path from" + nodes.get(sv)+ " to"+ nodes.get(i)+": ");
+            System.out.println(result.get(i));
+        }
+
+        return result;
     }
 
 }

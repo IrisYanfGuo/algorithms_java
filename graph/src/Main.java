@@ -34,6 +34,9 @@ public class Main {
         a.addEdge(50, 70);
         a.addEdge(60, 70);
 
+
+        a.dijkstra(40);
+
         System.out.println(a.findNode(40));
 
         // test find
@@ -72,6 +75,23 @@ public class Main {
       //  btopo.topoSort();
 
 
+
+        GraphList dij = new GraphList();
+        dij.addNode(1);
+        dij.addNode(2);
+        dij.addNode(3);
+        dij.addNode(4);
+        dij.addNode(5);
+        dij.addNode(6);
+
+
+       dij.addEdge(2,1);
+       dij.addEdge(2,3);
+       dij.addEdge(1,4);
+       dij.addEdge(3,4);
+       dij.addEdge(4,5);
+
+        dij.dijkstra(2);
 
 
 

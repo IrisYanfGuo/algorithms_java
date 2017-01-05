@@ -356,6 +356,25 @@ public class BinaryTree<T extends Comparable<T>> {
      * Print 1. use traverse function to print
      */
 
+
+    // this is only used in tht graph method ,set all visited false
+
+    public void setVisitedF(TreeAction visitF){
+        Queue<TreeNode<T>> t = new Queue();
+        t.push(root);
+        while (!t.empty()) {
+            TreeNode<T> n = t.pop();
+            visitF.run(n);
+            if (n.getLeftTree() != null) {
+                t.push(n.getLeftTree());
+            }
+            if (n.getRightTree() != null) {
+                t.push(n.getRightTree());
+            }
+        }
+
+    }
+
 }
 
 

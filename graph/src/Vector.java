@@ -46,6 +46,19 @@ public class Vector<E> {
 		return null;
 	}
 
+	public Object findIndex(E e){
+        Object res = new Object();
+        for (int i = 0; i <count ; i++) {
+            if (data[i].equals(e)){
+                res = i;
+            }else {
+                System.out.println("can not find the node");
+                return false;
+            }
+        }
+        return res;
+    }
+
 	public void set(int index, E obj) {
 		data[index] = obj;
 	}
