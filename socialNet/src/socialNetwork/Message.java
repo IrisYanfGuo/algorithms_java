@@ -23,20 +23,20 @@ public class Message {
         // TODO Auto-generated constructor stub
     }
 
-    public Message(String content, String author, int ageLimit, int privacy, int timeStamp) {
+    public Message(String content, String author, int ageLimit, int privacy) {
         // TODO Auto-generated constructor stub
         this.content = content;
         this.author = author;
         this.ageLimit = ageLimit;
         this.privacy = privacy;
-        this.timeStamp = timeStamp;
+        this.timeStamp = TimeStamp.getTimeStamp();
     }
 
-    public Message(String content, String author, int ageLimit, int timeStamp) {
+    public Message(String content, String author, int ageLimit) {
         this.content = content;
         this.author = author;
         this.ageLimit = ageLimit;
-        this.timeStamp = timeStamp;
+        this.timeStamp = TimeStamp.getTimeStamp();
     }
 
     @Override

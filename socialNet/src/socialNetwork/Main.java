@@ -1,11 +1,9 @@
 package socialNetwork;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Paths;
 
 /**
  * A Main class is where i test all my classes version:1.0 time 21th Nov
@@ -34,7 +32,7 @@ public class Main {
         while (line != null) {
             String[] string1 = line.split(" ");
             net.createUserProfile(string1[0], Integer.parseInt(string1[1]));
-            System.out.println(line);
+            //   System.out.println(line);
             line = readUser.readLine();
         }
 
@@ -48,7 +46,7 @@ public class Main {
             String author = line1.split(" ")[1];
             int ageLimit = Integer.parseInt(line1.split(" ")[2]);
             int privacy = Integer.parseInt(line1.split(" ")[3]);
-            UserMsg msg = new UserMsg(content, author, ageLimit, privacy, 0);
+            UserMsg msg = new UserMsg(content, author, ageLimit, privacy);
             net.postMsgAll(msg, msg.getPrivacy(), msg.getAgeLimit());
             line1 = readMsg.readLine();
         }
@@ -73,36 +71,87 @@ public class Main {
             String author = line3.split(" ")[1];
             int ageLimit = Integer.parseInt(line3.split(" ")[2]);
             boolean paid = Boolean.parseBoolean(line3.split(" ")[3]);
-            Ad ad = new Ad(content, author, ageLimit, 0, paid);
+            Ad ad = new Ad(content, author, ageLimit, paid);
             net.postAdAll(ad, author, ageLimit, paid);
             line3 = readAd.readLine();
         }
-        System.out.print("read ads from ad.txt completed\n post these ads to all users");
+        System.out.print("read ads from ad.txt completed\n post these ads to all users\n");
 
 
         ///////////////////////////initialize finished////////////////////////////
+        // net.findUser("userB").printADlist();
+        // net.findUser("userB").printUseMsgList();
+
+        //print all users and companys
+        //  net.printUsr();
+        // net.printCom();
 
 
-        //net.findUser("userB").printADlist();
-       // net.findUser("userB").printUseMsgList();
+        // connect some users
 
-        net.printUsr();
-        net.printCom();
+        BufferedReader readConnect = new BufferedReader(new FileReader("./src/socialNetwork/connect.txt"));
 
-        net.connect("userA","userB");
-        net.connect("userA","userC");
-        net.connect("userB","userD");
-        net.connect("userC","userD");
-        net.connect("userD","userE");
+        String line4 = readConnect.readLine();
+        while (line4 != null) {
+            String user1 = line4.split("   ")[0];
+            String user2 = line4.split("   ")[1];
+            net.connect(user1, user2);
+            line4 = readConnect.readLine();
+        }
+        System.out.print("read ads from connect.txt completed\n connect these users\n");
 
-        System.out.println(net.distance("userA","userE"));
-        System.out.println(net.distanceExcludeCorporate("userA","userE"));
-        net.printPath("userA","userE");
-        net.printPathExcludeCorporate("userA","userE");
 
-       // net.printWall("userB");
+//  users add  rate to companys
 
-      //  net.findUser("haha");
+
+        BufferedReader readRate = new BufferedReader(new FileReader("./src/socialNetwork/rate.txt"));
+
+        String line5 = readRate.readLine();
+        while (line5 != null) {
+            String user1 = line5.split(" ")[0];
+            String com = line5.split(" ")[1];
+            int rate = Integer.parseInt(line5.split(" ")[2]);
+            net.rate(user1, com, rate);
+            line5 = readRate.readLine();
+        }
+        System.out.print("read rates from connect.txt completed\n connect these users\n");
+        System.out.println("initialize completed!");
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+
+
+
+//////////////////////////initialize completed///////////////////////////////////////////////////////
+
+        System.out.println("test all functions");
+        System.out.println();
+        System.out.println("1.test print friendlist");
+        net.printFriendList("userA");
+        System.out.println();
+        System.out.println();
+
+
+        System.out.println("2.test print wall");
+        net.printWall("userB");
+        System.out.println();
+        System.out.println();
+
+
+        System.out.println("3.test distance function");
+        System.out.println("3.1 test the social graph with company");
+        System.out.println(net.distance("userA", "userZ"));
+
+        net.printPath("userA","userZ");
+
+        System.out.println(net.distanceExcludeCorporate("userA", "userZ"));
+        net.printPath("userA", "userZ");
+        net.printPathExcludeCorporate("userA", "userZ");
+
+        //  net.printWall("userB");
+
+        //  net.findUser("haha");
 
 
     }

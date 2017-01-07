@@ -1,0 +1,13 @@
+userA companyA 1
+userB companyA 2
+userC companyA 3
+userD companyA 4
+userE companyB 5
+userE companyC 3
+userE companyE 2
+userZ companyE 1
+userQ companyE 2
+userC companyE 2
+userF companyE 3
+userS companyE 1
+userF companyD 8

@@ -15,8 +15,8 @@ public class UserMsg extends Message {
     public UserMsg() {
     }
 
-    public UserMsg(String content, String author, int ageLimit, int privacy, int timeStamp) {
-        super(content, author, ageLimit, privacy, timeStamp);
+    public UserMsg(String content, String author, int ageLimit, int privacy) {
+        super(content, author, ageLimit, privacy);
     }
 
     @Override

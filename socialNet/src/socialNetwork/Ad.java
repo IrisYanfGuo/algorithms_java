@@ -16,12 +16,12 @@ public class Ad extends Message{
     public Ad() {
     }
 
-    public Ad(String content, String author, int ageLimit, int privacy, int timeStamp) {
-        super(content, author, ageLimit, privacy, timeStamp);
+    public Ad(String content, String author, int ageLimit, int privacy) {
+        super(content, author, ageLimit, privacy);
     }
 
-    public Ad(String content, String author, int ageLimit, int timeStamp, boolean paid) {
-       super(content,author,ageLimit,timeStamp);
+    public Ad(String content, String author, int ageLimit, boolean paid) {
+       super(content,author,ageLimit);
         this.paid = paid;
     }
 

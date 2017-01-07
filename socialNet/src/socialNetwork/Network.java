@@ -23,7 +23,7 @@ public class Network implements INetwork {
     //companyInfo is a linkedList to store the information of company
     private LinkedList<Profile> companyInfo;
 
-    private GraphList<Profile> graph ;
+    private GraphList<Profile> graph;
 
     private GraphList<Profile> graphWithoutCom;
 
@@ -49,6 +49,7 @@ public class Network implements INetwork {
         graph.addNode(t);
         graphWithoutCom.addNode(t);
     }
+
     public void createCorporateProfile(String name) {
         Profile a = new Profile(name);
         companyInfo.addFirst(a);
@@ -76,11 +77,11 @@ public class Network implements INetwork {
 
         for (int i = 0; i < usersInfo.size(); i++) {
             Profile temp = usersInfo.get(i);
-            if (username.equals(temp.getUsername())){
+            if (username.equals(temp.getUsername())) {
                 return temp;
             }
         }
-        System.out.println("can not find the user :"+username);
+        System.out.println("can not find the user :" + username);
         return null;
     }
 
@@ -88,16 +89,39 @@ public class Network implements INetwork {
     //postMsg function
 
 
-    public Profile findCompany(String comName){
+    public Profile findCompany(String comName) {
         for (int i = 0; i < companyInfo.size(); i++) {
             Profile temp = companyInfo.get(i);
-            if (comName.equals(temp.getUsername())){
+            if (comName.equals(temp.getUsername())) {
                 return temp;
             }
         }
-        System.out.println("can not find the user :"+comName);
+
+
+        System.out.println("can not find by name :" + comName);
         return null;
     }
+
+
+    // search the userInfo list and Company List
+    public Profile findByName(String name) {
+        for (int i = 0; i < companyInfo.size(); i++) {
+            Profile temp = companyInfo.get(i);
+            if (name.equals(temp.getUsername())) {
+                return temp;
+            }
+        }
+
+        for (int i = 0; i < usersInfo.size(); i++) {
+            Profile temp = usersInfo.get(i);
+            if (name.equals(temp.getUsername())) {
+                return temp;
+            }
+        }
+        System.out.println("can not find the user :" + name);
+        return null;
+    }
+
 
     public void postMessage(String username, UserMsg message,
                             int privacy, int ageLimit) {
@@ -162,7 +186,7 @@ public class Network implements INetwork {
         Profile a = findUser(username);
         if (a.getAge() >= ageLimit) {
             int t = a.extraTime(ad.getAuthor());
-            ad.setTimeStamp(TimeStamp.getTimeStamp()+t);
+            ad.setTimeStamp(TimeStamp.getTimeStamp() + t);
             a.postAd(ad);
         }
     }
@@ -199,33 +223,46 @@ public class Network implements INetwork {
     }
 
 
-
     public void connect(String username1, String username2) {
-        Profile t1 =  findUser(username1);
-        Profile t2 =  findUser(username2);
+        Profile t1 = findUser(username1);
+        Profile t2 = findUser(username2);
         if ((t1 != null) && (t2 != null)) {
             t1.addFri(t2);
             t2.addFri(t1);
-            graph.addEdge(t1,t2);
-            graph.addEdge(t2,t1);
-            graphWithoutCom.addEdge(t2,t1);
-            graphWithoutCom.addEdge(t1,t2);
-        }else {
+            graph.addEdge(t1, t2);
+            graph.addEdge(t2, t1);
+            graphWithoutCom.addEdge(t2, t1);
+            graphWithoutCom.addEdge(t1, t2);
+        } else {
+            System.out.println(" can not find the user");
+        }
+    }
+
+    public void connectCom_User(String userName,String comName){
+        Profile user = findUser(userName);
+        Profile com = findCompany(comName);
+
+        if ((user != null) && (com != null)) {
+            user.addFri(com);
+            com.addFri(user);
+            graph.addEdge(user, com);
+            graph.addEdge(com, user);
+        } else {
             System.out.println(" can not find the user");
         }
     }
 
 
     public void printFriendList(String username) {
-        Profile t =  findUser(username);
+        Profile t = findUser(username);
         t.printFriList();
     }
 
     public void rate(String username, String corporateName, int stars) {
-        Profile a =  findUser(username);
-        Profile com = findCompany(corporateName);
-       connect(username,corporateName);
-        a.addRateList(corporateName,stars);
+        Profile a = findUser(username);
+        //Profile com = findCompany(corporateName);
+        connectCom_User(username, corporateName);
+        a.addRateList(corporateName, stars);
     }
 
     public int distance(String username1, String username2) {
@@ -233,9 +270,9 @@ public class Network implements INetwork {
         Profile b = findUser(username2);
 
         Vector<Vector<GraphList<Profile>.Node>> result = graph.dijkstra(a);
-        GraphList.Node t=graph.findNode(b);
+        GraphList.Node t = graph.findNode(b);
 
-        return (result.get(t.getIvex())).size()-1;
+        return (result.get(t.getIvex())).size() - 1;
     }
 
     public void printPath(String username1, String username2) {
@@ -243,9 +280,16 @@ public class Network implements INetwork {
         Profile b = findUser(username2);
 
         Vector<Vector<GraphList<Profile>.Node>> result = graph.dijkstra(a);
-        GraphList.Node t=graph.findNode(b);
-
-        System.out.println(result.get(t.getIvex()));
+        GraphList.Node t = graph.findNode(b);
+        Vector<GraphList<Profile>.Node> temp = result.get(t.getIvex());
+        System.out.print("Path from "+username1+" to "+username2+"(include com): ");
+        for (int i = 0; i < temp.size(); i++) {
+            System.out.print(temp.get(i));
+            if (i<temp.size()-1){
+                System.out.print("->");
+            }
+        }
+       // System.out.println(temp);
     }
 
     public int distanceExcludeCorporate(String username1, String username2) {
@@ -254,9 +298,9 @@ public class Network implements INetwork {
         Profile b = findUser(username2);
 
         Vector<Vector<GraphList<Profile>.Node>> result = graphWithoutCom.dijkstra(a);
-        GraphList.Node t=graphWithoutCom.findNode(b);
+        GraphList.Node t = graphWithoutCom.findNode(b);
 
-        return (result.get(t.getIvex())).size()-1;
+        return (result.get(t.getIvex())).size() - 1;
     }
 
     public void printPathExcludeCorporate(String username1, String username2) {
@@ -264,9 +308,16 @@ public class Network implements INetwork {
         Profile b = findUser(username2);
 
         Vector<Vector<GraphList<Profile>.Node>> result = graphWithoutCom.dijkstra(a);
-        GraphList.Node t=graphWithoutCom.findNode(b);
+        GraphList.Node t = graphWithoutCom.findNode(b);
+        Vector<GraphList<Profile>.Node> temp = result.get(t.getIvex());
+        System.out.print("Path from "+username1+" to "+username2+"(exclude com): ");
+        for (int i = 0; i < temp.size(); i++) {
+            System.out.print(temp.get(i));
+            if (i<temp.size()-1){
+                System.out.print("->");
+            }
+        }
 
-        System.out.println(result.get(t.getIvex()));
     }
 
 

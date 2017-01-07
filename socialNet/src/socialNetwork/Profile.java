@@ -78,7 +78,7 @@ public class Profile {
 
     @Override
     public String toString() {
-        return "Profile: " + username;
+        return "" + username;
     }
 
     /**
@@ -134,7 +134,7 @@ public class Profile {
 
     //sent message to friends
     public void sentMsg(String m,int privacy,int ageLimit){
-        UserMsg meg = new UserMsg(m,username,ageLimit,privacy,0);
+        UserMsg meg = new UserMsg(m,username,ageLimit,privacy);
         for (int i = 0; i <friList.size() ; i++) {
             friList.get(i).postUsrMsg(meg);
         }
