@@ -1,6 +1,5 @@
 package datastru;
 
-import java.util.Comparator;
 
 /**
  * Class Linked;ist， contains listElement[]
@@ -346,11 +345,11 @@ public class LinkedList<E> implements ILinkedList<E> {
 	public void addSorted(Comparable o) {
 		if (head == null) {
 			head = new ListElement((E)o, null);
-		} else if (((Comparable) head.first()).compareTo(o) > 0) {
+		} else if (((Comparable) head.first()).compareTo(o) < 0) {
 			head = new ListElement((E)o, head);
 		} else {
 			ListElement d = head;
-			while ((d.rest() != null) && ((Comparable) d.rest().first()).compareTo(o) < 0) {
+			while ((d.rest() != null) && ((Comparable) d.rest().first()).compareTo(o) > 0) {
 				d = d.rest();
 			}
 			ListElement next = d.rest();

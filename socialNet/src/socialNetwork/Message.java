@@ -19,10 +19,21 @@ public class Message {
     private int timeStamp;
 
 
+    /**
+     * Instantiates a new Message.
+     */
     public Message() {
         // TODO Auto-generated constructor stub
     }
 
+    /**
+     * Instantiates a new Message.
+     *
+     * @param content  the content
+     * @param author   the author
+     * @param ageLimit the age limit
+     * @param privacy  the privacy
+     */
     public Message(String content, String author, int ageLimit, int privacy) {
         // TODO Auto-generated constructor stub
         this.content = content;
@@ -32,6 +43,14 @@ public class Message {
         this.timeStamp = TimeStamp.getTimeStamp();
     }
 
+    /**
+     * Instantiates a new Message.
+     *
+     * @param content  the content
+     * @param author   the author
+     * @param ageLimit the age limit
+     */
+// used in Ad Class, without privacy
     public Message(String content, String author, int ageLimit) {
         this.content = content;
         this.author = author;
@@ -49,30 +68,63 @@ public class Message {
                 '}';
     }
 
+    /**
+     * Gets content.
+     *
+     * @return the content
+     */
     public String getContent() {
         return content;
     }
 
+    /**
+     * Gets author.
+     *
+     * @return the author
+     */
     public String getAuthor() {
         return author;
     }
 
+    /**
+     * Gets age limit.
+     *
+     * @return the age limit
+     */
     public int getAgeLimit() {
         return ageLimit;
     }
 
+    /**
+     * Gets privacy.
+     *
+     * @return the privacy
+     */
     public int getPrivacy() {
         return privacy;
     }
 
+    /**
+     * Gets time stamp.
+     *
+     * @return the time stamp
+     */
     public int getTimeStamp() {
         return timeStamp;
     }
 
+    /**
+     * Sets time stamp.
+     *
+     * @param timeStamp the time stamp
+     */
     public void setTimeStamp(int timeStamp) {
         this.timeStamp = timeStamp;
     }
 
+    /**
+     * Print.
+     */
     public void print() {
         System.out.println(toString());
     }

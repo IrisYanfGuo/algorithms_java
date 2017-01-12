@@ -30,18 +30,20 @@ public interface INetwork {
     void printWall(String username);
 
     /**
-     * Post message to user by his or her username
-     *
-     * @param username the username
+     *comment,  here i changed the function provided in word。
+     * it's strange that why we need a username variable when post the message
+     * the privacy variable will tell me whether the message is send to friends or public
      * @param message  the message created by user
      * @param privacy  the privacy, with 0 public ,1 to friends ,2 friends of friends
      * @param ageLimit the age limit
      */
-    void postMessage(String username, UserMsg message,
-                     int privacy, int ageLimit);
+    void postMessage(UserMsg message, int privacy, int ageLimit);
 
     /**
      * Post ad to user by it's user name.
+     *
+     * yanfguo's comment: if i want to post an add, why i need a username?
+     * the ad only support 1.post to subscriber 2. post to all. it's not logic
      *
      * @param username the username
      * @param message  the message
@@ -49,7 +51,7 @@ public interface INetwork {
      * @param paid     the paid
      */
     void postAdByUser(String username, Ad message, int ageLimit,
-                boolean paid);
+                      boolean paid);
 
     /**
      * connect

@@ -1,6 +1,5 @@
 package socialNetwork;
 
-import datastru.LinkedList;
 
 /**
  * ClassName:Ad
